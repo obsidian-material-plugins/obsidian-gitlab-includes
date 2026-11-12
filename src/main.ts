@@ -33,12 +33,12 @@ export default class GitLabIncludes extends Plugin {
     this.registerEditorExtension(livePreview(this.app));
     this.addCommand({
       id: "insert-include",
-      name: "Insert GitLab include",
+      name: "Insert include",
       editorCallback: (editor, info) => { if (info.file) this.insert(editor, info.file); }
     });
     this.addCommand({
       id: "convert-embeds",
-      name: "Convert Markdown embeds to GitLab includes",
+      name: "Convert Markdown embeds to includes",
       editorCallback: (editor, info) => {
         if (!info.file) return;
         const source = info.file.path;
@@ -50,7 +50,7 @@ export default class GitLabIncludes extends Plugin {
       }
     });
     this.registerEvent(this.app.workspace.on("editor-menu", (menu, editor, info) => {
-      if (info.file) menu.addItem(item => item.setTitle("Insert GitLab include").setIcon("file-plus").onClick(() => {
+      if (info.file) menu.addItem(item => item.setTitle("Insert include").setIcon("file-plus").onClick(() => {
         if (info.file) this.insert(editor, info.file);
       }));
     }));
@@ -87,18 +87,16 @@ export default class GitLabIncludes extends Plugin {
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         if (node.nodeType !== Node.TEXT_NODE) continue;
-        const previous = i === 0 || (nodes[i - 1] instanceof HTMLBRElement);
-        const next = i === nodes.length - 1 || (nodes[i + 1] instanceof HTMLBRElement);
+        const previous = i === 0 || nodes[i - 1].instanceOf(HTMLBRElement);
+        const next = i === nodes.length - 1 || nodes[i + 1].instanceOf(HTMLBRElement);
         const lines = (node.textContent ?? "").split("\n");
-        const fragment = document.createDocumentFragment();
+        const fragment = paragraph.ownerDocument.createDocumentFragment();
         let changed = false;
         lines.forEach((line, index) => {
           if (index) fragment.append("\n");
           const path = (index > 0 || previous) && (index < lines.length - 1 || next) ? parseDirective(line) : null;
           if (path === null) { fragment.append(line); return; }
-          const container = document.createElement("span");
-          container.className = "gitlab-include";
-          fragment.append(container);
+          const container = fragment.createSpan({ cls: "gitlab-include" });
           ctx.addChild(new IncludeRender(container, this.app, ctx.sourcePath, path));
           changed = true;
         });

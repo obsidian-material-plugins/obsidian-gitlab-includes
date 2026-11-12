@@ -116,8 +116,9 @@ export class IncludeLinkIndex extends Component {
     const inactive = () => this.dead;
     // The concrete wrappers have different signatures; preserve each method's
     // type at the adapter boundary and its original receiver when inactive.
-    const guarded = function(this: NativeLinkCache, ...args: unknown[]) {
-      return Reflect.apply(inactive() ? original : replacement, this, args);
+    const guarded = function(this: NativeLinkCache, ...args: Parameters<NativeLinkCache[K]>): ReturnType<NativeLinkCache[K]> {
+      const invoke = (inactive() ? original : replacement) as (...values: Parameters<NativeLinkCache[K]>) => ReturnType<NativeLinkCache[K]>;
+      return invoke.apply(this, args);
     } as NativeLinkCache[K];
     cache[name] = guarded;
     this.register(() => {

@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import GitLabIncludes from "../src/main";
 import { TFile } from "./obsidian-mock";
 import { App, MarkdownPostProcessorContext } from "obsidian";
+import { installDomHelpers } from "./dom-helpers";
 
 describe("reading view postprocessor", () => {
   it("renders independent include lines without altering source or code examples", async () => {
@@ -12,19 +13,6 @@ describe("reading view postprocessor", () => {
     const pre = document.createElement("pre");
     pre.textContent = "::include{file=one.md}";
     root.append(paragraph, pre);
-    HTMLElement.prototype.createEl = function(this: HTMLElement, tag: string, options: { cls?: string; text?: string }) {
-      const el = document.createElement(tag);
-      if (options.cls) el.className = options.cls;
-      if (options.text) el.textContent = options.text;
-      this.appendChild(el);
-      return el;
-    } as typeof HTMLElement.prototype.createEl;
-    HTMLElement.prototype.createDiv = function(this: HTMLElement, options: { cls: string }) {
-      const el = document.createElement("div");
-      el.className = options.cls;
-      this.appendChild(el);
-      return el;
-    } as typeof HTMLElement.prototype.createDiv;
     const files = [new TFile("docs/one.md"), new TFile("docs/two.md")];
     const app = {
       vault: {
@@ -47,5 +35,23 @@ describe("reading view postprocessor", () => {
     expect(paragraph.textContent).toContain("after");
     expect(pre.textContent).toBe("::include{file=one.md}");
     for (const child of children) child.unload();
+  });
+  it("recognizes line breaks and creates embeds in a different window's document", async () => {
+    const frame = document.createElement("iframe"); document.body.append(frame);
+    const doc = frame.contentDocument!;
+    installDomHelpers(frame.contentWindow as Window & typeof globalThis);
+    doc.body.innerHTML = "<p>before<br>::include{file=one.md}<br>after</p>";
+    expect(doc.querySelector("br") instanceof HTMLBRElement).toBe(false);
+    const file = new TFile("docs/one.md");
+    const app = { vault: { on: () => () => {}, cachedRead: async () => "# Heading", getAbstractFileByPath: (path: string) => path === file.path ? file : null }, workspace: { on: () => () => {} } };
+    const plugin = new GitLabIncludes(app as unknown as App, {} as never); await plugin.onload();
+    const children: { load: () => void; unload: () => void }[] = [];
+    const ctx = { sourcePath: "docs/index.md", addChild: (child: typeof children[number]) => { children.push(child); child.load(); } };
+    const processor = (plugin as unknown as { processor: (el: HTMLElement, ctx: MarkdownPostProcessorContext) => void }).processor;
+    processor(doc.body, ctx as unknown as MarkdownPostProcessorContext);
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(doc.querySelectorAll(".gitlab-include")).toHaveLength(1);
+    expect(doc.querySelector(".gitlab-include-stage")?.ownerDocument).toBe(doc);
+    for (const child of children) child.unload(); plugin.unload(); frame.remove();
   });
 });

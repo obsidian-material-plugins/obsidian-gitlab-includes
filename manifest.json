@@ -1,7 +1,7 @@
 {
   "id": "gitlab-includes",
   "name": "GitLab Includes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "minAppVersion": "1.15.0",
   "description": "Render GitLab Markdown includes as embedded notes while preserving the original file syntax.",
   "author": "VingGit",
