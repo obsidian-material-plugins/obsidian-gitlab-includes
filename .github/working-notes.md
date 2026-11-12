@@ -34,3 +34,33 @@ Interpretation: preserve and push the audited implementation, then investigate a
 - Native rendering already uses the installed app's own embed component through a guarded internal factory.
 - The app bundle has been extracted locally into the sibling `playground` for inspection. It is not part of the plugin source or release assets.
 - Directly adding include references to native cached embeds could affect Obsidian's native rename/rewrite pipeline; this is a hypothesis to test, not an approved implementation design.
+
+## Checkpoint and in-memory translation
+
+- Checkpoint pushed to `main`: `2cc246e3ee78787fbc8b72fdf6ff5f06d0903f28`. Its GitHub validation run succeeded. No tag/release was created.
+- Subsequent implementation is isolated on `feat/native-link-index`.
+- The user suggested transforming include references on the fly and forwarding them to the native resolver. Their hard requirement remains: "the text itself on the file cannot change, so that gitlab can still render the embeds". This refers to indexing/rendering; previously authorized rename updates still preserve the directive syntax.
+
+Verified by local inspection of the installed Obsidian 1.15.0 runtime (no proprietary implementation copied into the plugin):
+
+- Global/local graph renderers consume `resolvedLinks` and `unresolvedLinks`.
+- The native backlinks pane first filters sources by resolved counts, then reads references and original-source positions from `getFileCache`. `getBacklinksForFile` alone does not populate that pane.
+- Native `resolveLinks` consumes `iterateRefsForFile`, which reads `getFileCache` for Markdown. A runtime metadata copy can therefore feed the original resolver and the native pane together.
+- Native file rename rewriting obtains references from `iterateAllRefs`, which reads the stored parse metadata directly. Leaving those stores untouched keeps translated references out of that writer.
+- Native rename writes use original source offsets. Include path edits must wait for native link updates to finish, otherwise changing earlier directive lengths can invalidate those offsets. The FileManager update queue provides a completion promise; the adapter feature-detects it.
+
+Implementation uses guarded, reversible wrappers for `getFileCache`, `getFirstLinkpathDest` and `getBacklinksForFile`. Metadata copies append native-shaped embeds whose positions refer to the original GitLab directive. Rooted reference keys avoid basename fallback; collision handling and exact-file checks preserve literal relative paths, hashes/percent signs and native link coexistence. No translated reference enters stored parse caches or saved Markdown. Native resolution queues publish the usual graph/backlink refresh events. Startup reads are bounded and cannot overwrite newer metadata events.
+
+Live evidence so far: the actual native resolver reports two includes plus a native embed as three references; the native backlinks pane renders the original directives; literal hash/percent/Unicode targets, create/delete and directive removal reconcile correctly. Full graph-renderer assertions, rename ordering and unload/reload verification are still being completed. Earlier pane timeouts came from an unpinned test pane and a cached development script; they are not compatibility claims.
+
+## Integration outcome
+
+The final indexing run passed all 24 in-app checks with no errors. This includes real include-only edges in both graph renderers, native backlink snippets and click navigation to the directive line, outgoing-link deduplication, literal filenames, missing/create/delete transitions, source edits, file/source/folder renames, and unload/reload cleanup without duplicate counts. The automatic suite passes 48 unit tests plus type/lint/manifest/build/compiled-artifact checks. Evidence is in `docs/validation/0.1.0-links.json`.
+
+The rename-order guard is verified in the app: two earlier include paths change length while a later native embed is also rewritten, and all three references still resolve. Source edits follow the existing automatic-link preference; indexing itself does not alter files. A follow-up rendering regression audit is run with indexing active.
+
+Development notes: use fresh Node modules for repeated audits, pin backlink/local-graph fixture panes to their intended files, and poll for native ephemeral cursor selection after backlink navigation. Temporary local development hooks are removed from the installed bundle before handoff. The user's own test-vault notes changed during the session; do not restore their older contents or hashes.
+
+Rendering regression completed: all 73 existing checks pass with indexing active, zero errors. Recorded in `docs/validation/0.1.0-with-indexing.json`. Combined in-app coverage is 97 passing checks.
+
+Handoff cleanup verified: temporary fixture folders are gone, the development bridge is stopped, and the plugin has been reloaded from the clean build. Installed `main.js`, `manifest.json` and `styles.css` are byte-identical to the validated release assets. The release ZIP contains exactly those three files with matching hashes. No tag or release was published.

@@ -1,0 +1,464 @@
+{
+  "appVersion": "1.15.0",
+  "checks": [
+    {
+      "name": "source: both embeds mounted",
+      "pass": true
+    },
+    {
+      "name": "source: same native component constructor",
+      "pass": true,
+      "detail": {
+        "include": "kE",
+        "native": "kE"
+      }
+    },
+    {
+      "name": "source: same embed attributes and classes",
+      "pass": true
+    },
+    {
+      "name": "source: theme cascade matches in theme-light",
+      "pass": true
+    },
+    {
+      "name": "source: theme cascade matches in theme-dark",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for root",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for title",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for content",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for preview",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for heading",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for paragraph",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for open control",
+      "pass": true
+    },
+    {
+      "name": "source: all computed styles match for checkbox",
+      "pass": true
+    },
+    {
+      "name": "source: selector parity .cm-content > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "source: selector parity p > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": false,
+        "native": false
+      }
+    },
+    {
+      "name": "source: selector parity .markdown-preview-section > .el-p > p > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": false,
+        "native": false
+      }
+    },
+    {
+      "name": "source: selector parity .internal-embed[src=\"child.md\"]",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "source: selector parity .internal-embed[alt=\"child\"]",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "source: live CSS propagates to background",
+      "pass": true
+    },
+    {
+      "name": "source: live CSS propagates to title color",
+      "pass": true
+    },
+    {
+      "name": "source: live CSS propagates to heading spacing",
+      "pass": true
+    },
+    {
+      "name": "source: live CSS propagates to control color",
+      "pass": true
+    },
+    {
+      "name": "source: structural CSS snippet applies automatically",
+      "pass": true
+    },
+    {
+      "name": "source: heading folding works equally",
+      "pass": true,
+      "detail": [
+        {
+          "available": true,
+          "hidden": true
+        },
+        {
+          "available": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "source: include checkbox updates target note",
+      "pass": true,
+      "detail": {
+        "before": {
+          "checked": false,
+          "text": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [ ] Task\n- List item\n"
+        },
+        "after": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [x] Task\n- List item\n"
+      }
+    },
+    {
+      "name": "source: native checkbox updates target note",
+      "pass": true,
+      "detail": {
+        "before": {
+          "checked": false,
+          "text": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [ ] Task\n- List item\n"
+        },
+        "after": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [x] Task\n- List item\n"
+      }
+    },
+    {
+      "name": "source: clicking embed selects reference for editing",
+      "pass": true,
+      "detail": [
+        "::include{file=child.md}",
+        "![child](child.md)"
+      ]
+    },
+    {
+      "name": "source: included content updates with target",
+      "pass": true
+    },
+    {
+      "name": "source: target updates preserve embed instance like native",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "source: rich content parity table",
+      "pass": true
+    },
+    {
+      "name": "source: rich content parity pre",
+      "pass": true
+    },
+    {
+      "name": "source: rich content parity .callout",
+      "pass": true
+    },
+    {
+      "name": "source: rich content parity a.internal-link",
+      "pass": true
+    },
+    {
+      "name": "source: rich content parity .metadata-container",
+      "pass": true
+    },
+    {
+      "name": "source: long embeds scroll equally",
+      "pass": true
+    },
+    {
+      "name": "source: target update preserves scroll like native",
+      "pass": true
+    },
+    {
+      "name": "source: forward selection keeps include reference hidden",
+      "pass": true
+    },
+    {
+      "name": "source: reverse selection keeps include reference hidden",
+      "pass": true
+    },
+    {
+      "name": "source: arrow/caret editing reveals reference",
+      "pass": true
+    },
+    {
+      "name": "preview: both embeds mounted",
+      "pass": true
+    },
+    {
+      "name": "preview: same native component constructor",
+      "pass": true,
+      "detail": {
+        "include": "kE",
+        "native": "kE"
+      }
+    },
+    {
+      "name": "preview: same embed attributes and classes",
+      "pass": true
+    },
+    {
+      "name": "preview: theme cascade matches in theme-light",
+      "pass": true
+    },
+    {
+      "name": "preview: theme cascade matches in theme-dark",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for root",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for title",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for content",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for preview",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for heading",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for paragraph",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for open control",
+      "pass": true
+    },
+    {
+      "name": "preview: all computed styles match for checkbox",
+      "pass": true
+    },
+    {
+      "name": "preview: selector parity .cm-content > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": false,
+        "native": false
+      }
+    },
+    {
+      "name": "preview: selector parity p > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "preview: selector parity .markdown-preview-section > .el-p > p > .internal-embed",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "preview: selector parity .internal-embed[src=\"child.md\"]",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "preview: selector parity .internal-embed[alt=\"child\"]",
+      "pass": true,
+      "detail": {
+        "include": true,
+        "native": true
+      }
+    },
+    {
+      "name": "preview: live CSS propagates to background",
+      "pass": true
+    },
+    {
+      "name": "preview: live CSS propagates to title color",
+      "pass": true
+    },
+    {
+      "name": "preview: live CSS propagates to heading spacing",
+      "pass": true
+    },
+    {
+      "name": "preview: live CSS propagates to control color",
+      "pass": true
+    },
+    {
+      "name": "preview: structural CSS snippet applies automatically",
+      "pass": true
+    },
+    {
+      "name": "preview: heading folding works equally",
+      "pass": true,
+      "detail": [
+        {
+          "available": true,
+          "hidden": true
+        },
+        {
+          "available": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "preview: include checkbox updates target note",
+      "pass": true,
+      "detail": {
+        "before": {
+          "checked": false,
+          "text": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [ ] Task\n- List item\n"
+        },
+        "after": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [x] Task\n- List item\n"
+      }
+    },
+    {
+      "name": "preview: native checkbox updates target note",
+      "pass": true,
+      "detail": {
+        "before": {
+          "checked": false,
+          "text": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [ ] Task\n- List item\n"
+        },
+        "after": "## Heading\n\nParagraph with **bold** text and [local link](other.md).\n\n- [x] Task\n- List item\n"
+      }
+    },
+    {
+      "name": "source Markdown unchanged",
+      "pass": true
+    },
+    {
+      "name": "rename: included target reference remains GitLab syntax",
+      "pass": true
+    },
+    {
+      "name": "rename: both embeds render after target rename",
+      "pass": true
+    },
+    {
+      "name": "rename: moving the source rebases relative include paths",
+      "pass": true
+    },
+    {
+      "name": "rename: both embeds render after source move",
+      "pass": true
+    },
+    {
+      "name": "rename: folder move preserves an unchanged relative include",
+      "pass": true,
+      "detail": {
+        "path": "include-parity-audit-1794491979112-moved/moved/source.md",
+        "text": "Before\n\n::include{file=../renamed child.md}\n\nBetween\n\n![renamed child](../renamed%20child.md)\n\nAfter\n"
+      }
+    },
+    {
+      "name": "rename: both embeds render after moving source and target together",
+      "pass": true
+    },
+    {
+      "name": "rename: disabled automatic link updates preserve source",
+      "pass": true
+    }
+  ],
+  "differences": {
+    "source: roots": {
+      "include": {
+        "tag": "DIV",
+        "classes": [
+          "inline-embed",
+          "internal-embed",
+          "is-loaded",
+          "markdown-embed"
+        ],
+        "src": "child.md",
+        "alt": "child",
+        "parent": "cm-content cm-lineWrapping"
+      },
+      "native": {
+        "tag": "DIV",
+        "classes": [
+          "inline-embed",
+          "internal-embed",
+          "is-loaded",
+          "markdown-embed"
+        ],
+        "src": "child.md",
+        "alt": "child",
+        "parent": "cm-content cm-lineWrapping"
+      }
+    },
+    "preview: roots": {
+      "include": {
+        "tag": "SPAN",
+        "classes": [
+          "inline-embed",
+          "internal-embed",
+          "is-loaded",
+          "markdown-embed"
+        ],
+        "src": "child.md",
+        "alt": "child",
+        "parent": ""
+      },
+      "native": {
+        "tag": "SPAN",
+        "classes": [
+          "inline-embed",
+          "internal-embed",
+          "is-loaded",
+          "markdown-embed"
+        ],
+        "src": "child.md",
+        "alt": "child",
+        "parent": ""
+      }
+    }
+  },
+  "errors": [],
+  "summary": {
+    "passed": 73,
+    "failed": 0
+  }
+}

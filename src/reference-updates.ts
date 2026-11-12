@@ -1,6 +1,7 @@
 import { App, Component, Notice, TAbstractFile, TFile, TFolder } from "obsidian";
 import { findIncludes } from "./include-parser";
 import { isRepresentablePath, relativePath, resolvePath } from "./path-resolver";
+import { nativeLinkUpdateCompletion } from "./native-link-updates";
 
 export interface PathMove { before: string; after: string }
 
@@ -62,7 +63,8 @@ export class IncludeReferenceUpdates extends Component {
         const after = movedPath(source.path, move);
         return { file: source, after, before: movedPath(after, { before: move.after, after: move.before }) };
       });
-      this.queue = this.queue.then(() => this.apply(move, sources)).catch(error => {
+      const nativeUpdates = nativeLinkUpdateCompletion(this.app);
+      this.queue = this.queue.then(async () => { await nativeUpdates; await this.apply(move, sources); }).catch(error => {
         console.error("GitLab Includes: failed to update include references", error);
         if (!this.dead) new Notice("Some GitLab include references could not be updated. Check the console for details.");
       });

@@ -7,8 +7,9 @@ The release is prepared locally. Publishing is a separate final action.
 - Native full-note includes in Live Preview and Reading View, with live theme/CSS inheritance and native controls.
 - Click-to-edit reference selection and selection across rendered content.
 - File/folder rename and move support, including rebasing paths when the including note moves, following Obsidian's automatic-link preference.
+- Native backlinks, global/local graphs and outgoing links through in-memory metadata translation, without converting saved Markdown.
 - Public-renderer compatibility fallback and local error handling.
-- Documented limits: native backlink/graph indexing, remote includes, heading/block include syntax and recursive GitLab includes are outside 0.1.0.
+- Documented limits: guarded internal API compatibility, direct-cache third-party consumers, remote includes, heading/block include syntax and recursive GitLab includes.
 
 Requires Obsidian 1.15.0+. The in-app validation platform is Windows with Obsidian 1.15.0. Other platforms remain unverified by that UI audit.
 
@@ -43,5 +44,7 @@ await require("/absolute/path/to/scripts/audit-embeds.cjs")(this.app, {
 ```
 
 It creates isolated fixture notes, compares native and GitLab embeds, tests rename preferences without changing app.json on disk, restores the original view, and removes its fixtures. It temporarily instruments the native factory to compare the resulting component constructors. Run it in a trusted disposable test vault and remove the temporary command afterward. Never append it to release assets; the artifact validator rejects development harness references.
+
+`scripts/audit-links.cjs` uses the same function signature for resolver counts, real global/local graph edges, backlink/outgoing panes and navigation, exact filenames, rename/move ordering, and unload/reload cleanup. It creates its own fixture notes and temporary panes. Use a fresh module load when repeating either audit: Node can retain development scripts across plugin reloads. Remove development hooks from the installed plugin after validation, then compare the installed assets with the validated release files.
 
 Publishing requirements were checked against the official [release instructions](https://docs.obsidian.md/Plugins/Releasing/Submit%20your%20plugin), [manifest reference](https://docs.obsidian.md/Reference/Manifest), [submission requirements](https://docs.obsidian.md/community-directory/submission-requirements-for-plugins) and [developer policies](https://docs.obsidian.md/community-directory/developer-policies).

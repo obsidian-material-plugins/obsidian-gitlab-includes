@@ -1,0 +1,488 @@
+{
+  "appVersion": "1.15.0",
+  "checks": [
+    {
+      "name": "native resolver counts include/native duplicates",
+      "pass": true
+    },
+    {
+      "name": "stored parse metadata remains native-only",
+      "pass": true
+    },
+    {
+      "name": "native backlink query includes all three original references",
+      "pass": true,
+      "details": [
+        {
+          "position": {
+            "start": {
+              "line": 8,
+              "col": 0,
+              "offset": 69
+            },
+            "end": {
+              "line": 8,
+              "col": 19,
+              "offset": 88
+            }
+          },
+          "link": "child.md",
+          "original": "![native](child.md)",
+          "displayText": "native"
+        },
+        {
+          "link": "/_gitlab-link-audit-1794491937116/child.md",
+          "target": "_gitlab-link-audit-1794491937116/child.md",
+          "original": "::include{file=child.md}",
+          "displayText": "child.md",
+          "position": {
+            "start": {
+              "line": 2,
+              "col": 0,
+              "offset": 8
+            },
+            "end": {
+              "line": 2,
+              "col": 24,
+              "offset": 32
+            }
+          }
+        },
+        {
+          "link": "/_gitlab-link-audit-1794491937116/child.md",
+          "target": "_gitlab-link-audit-1794491937116/child.md",
+          "original": "::include{file=child.md}",
+          "displayText": "child.md",
+          "position": {
+            "start": {
+              "line": 6,
+              "col": 0,
+              "offset": 43
+            },
+            "end": {
+              "line": 6,
+              "col": 24,
+              "offset": 67
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "backlink offsets refer to original directives",
+      "pass": true
+    },
+    {
+      "name": "indexing preserves saved GitLab Markdown",
+      "pass": true
+    },
+    {
+      "name": "native backlink pane renders all include/native matches",
+      "pass": true,
+      "details": "_gitlab-link-audit-1794491937116/Backlinks for childLinked mentions4graph-source1::include{file=child.md}source3::include{file=child.md}::include{file=child.md}![native](child.md)Unlinked mentions"
+    },
+    {
+      "name": "backlink pane displays the original include directive",
+      "pass": true
+    },
+    {
+      "name": "native backlink click navigates to the include source line",
+      "pass": true,
+      "details": {
+        "cursor": {
+          "line": 0,
+          "ch": 0
+        }
+      }
+    },
+    {
+      "name": "graph: native renderer contains an include-only edge",
+      "pass": true
+    },
+    {
+      "name": "localgraph: native renderer contains an include-only edge",
+      "pass": true
+    },
+    {
+      "name": "native outgoing pane deduplicates include/native destinations",
+      "pass": true
+    },
+    {
+      "name": "literal hash/percent/Unicode filename is indexed exactly",
+      "pass": true
+    },
+    {
+      "name": "missing include appears in native unresolved links",
+      "pass": true
+    },
+    {
+      "name": "creating a target resolves an existing include",
+      "pass": true
+    },
+    {
+      "name": "deleting a target removes the resolved edge",
+      "pass": true
+    },
+    {
+      "name": "deleted target objects have no include backlinks",
+      "pass": true
+    },
+    {
+      "name": "editing out a directive clears its unresolved edge",
+      "pass": true
+    },
+    {
+      "name": "native rename preserves two GitLab directives",
+      "pass": true,
+      "details": "Before\n\n::include{file=renamed child.md}\n\nBetween\n\n::include{file=renamed child.md}\n\n![native](renamed%20child.md)\n\nAfter\n"
+    },
+    {
+      "name": "target rename preserves graph and backlink counts",
+      "pass": true
+    },
+    {
+      "name": "source move rebases GitLab paths and indexes their new source",
+      "pass": true
+    },
+    {
+      "name": "whole-folder rename preserves graph and backlink references",
+      "pass": true
+    },
+    {
+      "name": "unload leaves the native graph edge and removes include edges",
+      "pass": true
+    },
+    {
+      "name": "unload restores native metadata and backlinks",
+      "pass": true
+    },
+    {
+      "name": "reload rebuilds include edges once",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "probes": {
+    "backlink": {
+      "file": "_gitlab-link-audit-1794491937116/child.md",
+      "view": [
+        "_loaded",
+        "_events",
+        "_children",
+        "icon",
+        "navigation",
+        "app",
+        "leaf",
+        "containerEl",
+        "canDropAnywhere",
+        "leftSidebarToggleEl",
+        "headerEl",
+        "contentEl",
+        "backButtonEl",
+        "forwardButtonEl",
+        "titleParentEl",
+        "titleEl",
+        "titleContainerEl",
+        "actionsEl",
+        "moreOptionsButtonEl",
+        "allowNoFile",
+        "requestUpdate",
+        "backlink",
+        "file"
+      ],
+      "prototype": [
+        "constructor",
+        "getDisplayText",
+        "getViewType",
+        "canAcceptExtension",
+        "getState",
+        "setState",
+        "showSearch",
+        "onResize",
+        "update"
+      ],
+      "backlink": [
+        "_loaded",
+        "_events",
+        "_children",
+        "collapseAll",
+        "extraContext",
+        "sortOrder",
+        "isShowingSearch",
+        "searchQuery",
+        "backlinkFile",
+        "backlinkCollapsed",
+        "backlinkHeaderEl",
+        "backlinkCountEl",
+        "backlinkQueue",
+        "unlinkedFile",
+        "unlinkedCollapsed",
+        "unlinkedHeaderEl",
+        "unlinkedCountEl",
+        "unlinkedAliases",
+        "unlinkedQueue",
+        "app",
+        "headerDom",
+        "collapseAllButtonEl",
+        "extraContextButtonEl",
+        "showSearchButtonEl",
+        "searchComponent",
+        "backlinkDom",
+        "unlinkedDom",
+        "file",
+        "tooltipPlacement"
+      ],
+      "text": "_gitlab-link-audit-1794491937116/Backlinks for childLinked mentions4graph-source1::include{file=child.md}source3::include{file=child.md}::include{file=child.md}![native](child.md)Unlinked mentions"
+    },
+    "graph": {
+      "view": [
+        "_loaded",
+        "_events",
+        "_children",
+        "icon",
+        "navigation",
+        "app",
+        "leaf",
+        "containerEl",
+        "canDropAnywhere",
+        "leftSidebarToggleEl",
+        "headerEl",
+        "contentEl",
+        "backButtonEl",
+        "forwardButtonEl",
+        "titleParentEl",
+        "titleEl",
+        "titleContainerEl",
+        "actionsEl",
+        "moreOptionsButtonEl",
+        "renderer",
+        "dataEngine"
+      ],
+      "prototype": [
+        "constructor",
+        "getDisplayText",
+        "onload",
+        "getViewType",
+        "onClose",
+        "onResize",
+        "showSearch",
+        "onPaneMenu",
+        "update",
+        "onOptionsChange"
+      ],
+      "renderer": [
+        "interactiveEl",
+        "onNodeClick",
+        "onNodeRightClick",
+        "onNodeHover",
+        "onNodeUnhover",
+        "workerResults",
+        "nodeLookup",
+        "nodes",
+        "links",
+        "dragNode",
+        "highlightNode",
+        "px",
+        "hanger",
+        "powerTag",
+        "destroyed",
+        "scale",
+        "nodeScale",
+        "textAlpha",
+        "targetScale",
+        "panX",
+        "panY",
+        "panvX",
+        "panvY",
+        "keyboardActions",
+        "panning",
+        "width",
+        "height",
+        "viewport",
+        "zoomCenterX",
+        "zoomCenterY",
+        "hidePowerTag",
+        "fNodeSizeMult",
+        "fLineSizeMult",
+        "fTextShowMult",
+        "fShowArrow",
+        "mouseX",
+        "mouseY",
+        "colors",
+        "renderTimer",
+        "containerEl",
+        "idleFrames",
+        "worker",
+        "iframeEl",
+        "renderCallback",
+        "onPointerDown",
+        "onPointerOver",
+        "onPointerOut"
+      ],
+      "text": "Graph viewFiltersGroupsDisplayForces"
+    },
+    "localgraph": {
+      "file": "_gitlab-link-audit-1794491937116/child.md",
+      "view": [
+        "_loaded",
+        "_events",
+        "_children",
+        "icon",
+        "navigation",
+        "app",
+        "leaf",
+        "containerEl",
+        "canDropAnywhere",
+        "leftSidebarToggleEl",
+        "headerEl",
+        "contentEl",
+        "backButtonEl",
+        "forwardButtonEl",
+        "titleParentEl",
+        "titleEl",
+        "titleContainerEl",
+        "actionsEl",
+        "moreOptionsButtonEl",
+        "allowNoFile",
+        "requestUpdate",
+        "renderedFile",
+        "renderer",
+        "engine",
+        "file"
+      ],
+      "prototype": [
+        "constructor",
+        "getDisplayText",
+        "getViewType",
+        "canAcceptExtension",
+        "getState",
+        "setState",
+        "load",
+        "onClose",
+        "onFileChanged",
+        "onResize",
+        "update",
+        "onPaneMenu",
+        "onOptionsChange"
+      ],
+      "renderer": [
+        "interactiveEl",
+        "onNodeClick",
+        "onNodeRightClick",
+        "onNodeHover",
+        "onNodeUnhover",
+        "workerResults",
+        "nodeLookup",
+        "nodes",
+        "links",
+        "dragNode",
+        "highlightNode",
+        "px",
+        "hanger",
+        "powerTag",
+        "destroyed",
+        "scale",
+        "nodeScale",
+        "textAlpha",
+        "targetScale",
+        "panX",
+        "panY",
+        "panvX",
+        "panvY",
+        "keyboardActions",
+        "panning",
+        "width",
+        "height",
+        "viewport",
+        "zoomCenterX",
+        "zoomCenterY",
+        "hidePowerTag",
+        "fNodeSizeMult",
+        "fLineSizeMult",
+        "fTextShowMult",
+        "fShowArrow",
+        "mouseX",
+        "mouseY",
+        "colors",
+        "renderTimer",
+        "containerEl",
+        "idleFrames",
+        "worker",
+        "iframeEl",
+        "renderCallback",
+        "onPointerDown",
+        "onPointerOver",
+        "onPointerOut"
+      ],
+      "text": "_gitlab-link-audit-1794491937116/Graph of childFiltersGroupsDisplayForces"
+    },
+    "outgoing-link": {
+      "file": "_gitlab-link-audit-1794491937116/source.md",
+      "view": [
+        "_loaded",
+        "_events",
+        "_children",
+        "icon",
+        "navigation",
+        "app",
+        "leaf",
+        "containerEl",
+        "canDropAnywhere",
+        "leftSidebarToggleEl",
+        "headerEl",
+        "contentEl",
+        "backButtonEl",
+        "forwardButtonEl",
+        "titleParentEl",
+        "titleEl",
+        "titleContainerEl",
+        "actionsEl",
+        "moreOptionsButtonEl",
+        "allowNoFile",
+        "requestUpdate",
+        "outgoingLink",
+        "file"
+      ],
+      "prototype": [
+        "constructor",
+        "getDisplayText",
+        "getViewType",
+        "canAcceptExtension",
+        "getState",
+        "setState",
+        "onResize",
+        "update"
+      ],
+      "outgoingLink": [
+        "_loaded",
+        "_events",
+        "_children",
+        "showSearch",
+        "outgoingFile",
+        "linksCollapsed",
+        "linksHeaderEl",
+        "linksCountEl",
+        "linksQueue",
+        "unlinkedFile",
+        "unlinkedCollapsed",
+        "unlinkedHeaderEl",
+        "unlinkedCountEl",
+        "unlinksQueue",
+        "unlinkedDomInfo",
+        "requestUpdate",
+        "app",
+        "outgoingLinkDom",
+        "outgoingLinkInfinityScroller",
+        "unlinkedDom",
+        "file",
+        "tooltipPlacement"
+      ],
+      "text": "_gitlab-link-audit-1794491937116/Outgoing links from sourceLinks1/_gitlab-link-audit-1794491937116/child.md_gitlab-link-audit-1794491937116Unlinked mentions"
+    }
+  },
+  "summary": {
+    "passed": 24,
+    "failed": 0
+  },
+  "completed": true
+}
