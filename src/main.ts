@@ -4,6 +4,7 @@ import { IncludeRender } from "./embed-renderer";
 import { livePreview } from "./live-preview";
 import { conversions } from "./conversion";
 import { isRepresentablePath, relativePath } from "./path-resolver";
+import { IncludeReferenceUpdates } from "./reference-updates";
 
 class FilePicker extends FuzzySuggestModal<TFile> {
   constructor(app: App, private choose: (file: TFile) => void) { super(app); }
@@ -14,6 +15,7 @@ class FilePicker extends FuzzySuggestModal<TFile> {
 
 export default class GitLabIncludes extends Plugin {
   onload(): void {
+    this.addChild(new IncludeReferenceUpdates(this.app));
     this.registerMarkdownPostProcessor((el, ctx) => this.renderReading(el, ctx));
     this.registerEditorExtension(livePreview(this.app));
     this.addCommand({
@@ -71,7 +73,7 @@ export default class GitLabIncludes extends Plugin {
           const path = (index > 0 || previous) && (index < lines.length - 1 || next) ? parseDirective(line) : null;
           if (path === null) { fragment.append(line); return; }
           const container = document.createElement("span");
-          container.className = "gitlab-include internal-embed";
+          container.className = "gitlab-include";
           fragment.append(container);
           ctx.addChild(new IncludeRender(container, this.app, ctx.sourcePath, path));
           changed = true;

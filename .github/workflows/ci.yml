@@ -16,9 +16,4 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - run: npm test
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run check:manifest
-      - run: npm run build
-      - run: test -s main.js && test -s manifest.json && test -s styles.css
+      - run: npm run prepare:release

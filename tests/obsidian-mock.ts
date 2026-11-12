@@ -7,6 +7,7 @@ export class Component {
   unload(): void { this.onunload(); for (const child of this.children) child.unload(); for (const cleanup of this.cleanups) cleanup(); }
   addChild<T extends Component>(child: T): T { this.children.add(child); child.load(); return child; }
   removeChild<T extends Component>(child: T): T { if (this.children.delete(child)) child.unload(); return child; }
+  register(cleanup: () => void): void { this.cleanups.push(cleanup); }
   registerEvent(cleanup: () => void): void { this.cleanups.push(cleanup); }
 }
 export class MarkdownRenderChild extends Component {
@@ -15,10 +16,14 @@ export class MarkdownRenderChild extends Component {
 export class TFile {
   constructor(public path: string, public extension = "md") {}
   get name(): string { return this.path.split("/").pop() ?? ""; }
+  get basename(): string { return this.name.replace(/\.md$/, ""); }
 }
+export class TFolder { constructor(public path: string, public children: (TFile | TFolder)[] = []) {} }
 export const editorInfoField = StateField.define({ create: () => null, update: value => value });
 export const editorLivePreviewField = StateField.define({ create: () => true, update: value => value });
 export class FuzzySuggestModal {}
+export class Notice { constructor(public message: string) {} }
+export function setIcon(el: HTMLElement, name: string): void { el.dataset.icon = name; }
 export class Plugin extends Component {
   constructor(public app: unknown) { super(); }
   processor: ((el: HTMLElement, ctx: unknown) => void) | null = null;
@@ -27,7 +32,8 @@ export class Plugin extends Component {
   addCommand(): void {}
 }
 export const MarkdownRenderer = {
-  async render(_app: unknown, markdown: string, el: HTMLElement): Promise<void> {
+  async render(_app: unknown, markdown: string, el: HTMLElement, _source?: string, _component?: Component): Promise<void> {
+    void _source; void _component;
     for (const line of markdown.split("\n")) {
       const element = document.createElement(line.startsWith("# ") ? "h1" : "p");
       element.textContent = line.startsWith("# ") ? line.slice(2) : line;

@@ -27,11 +27,14 @@ This is an embedded document:
 ::include{file=kansio/tiedosto kansiossa.md}
 ```
 
-GitLab renders the included file seamlessly, while Obsidian displays a recognizable bordered embedded note with a clickable filename. Paths are relative to the containing file, including `./` and `../`; spaces and Unicode are retained. The target must be an existing Markdown file inside the vault. The content is rendered by Obsidian using the target note's path for relative links. Missing, invalid, or unreadable targets show an error without changing the source. When a target changes, is removed, or is renamed, the displayed content refreshes; a rename does not rewrite directives.
+GitLab renders the included file seamlessly, while Obsidian displays its native note embed, including the current theme's border, title, content spacing, scrolling, and open-note control. Paths are relative to the containing file, including `./` and `../`; spaces and Unicode are retained. The target must be an existing Markdown file inside the vault. The content is rendered by Obsidian using the target note's path for relative links. Missing, invalid, or unreadable targets show an error without changing the source.
 
 ## Usage
 
-- In Reading View and Live Preview, standalone directives are displayed as embeds. Move the cursor or selection onto a directive in Live Preview to edit its actual text. Source mode always shows the original directive.
+- In Reading View and Live Preview, standalone directives are displayed as native embeds. Click the embed to reveal and select its reference for editing, or move the editing cursor onto the directive. The embed stays visible. Dragging across an embed keeps its directive hidden; double-click text selection, links, folding and task checkboxes retain their native behavior. Source mode always shows the original directive without a preview.
+- Theme rules and CSS snippets targeting native note embeds apply directly to includes through the same native classes and HTML structure. Styles are inherited live through the CSS cascade; the plugin does not copy or freeze computed styles.
+- As with native embeds, copying a selection across an embed in Live Preview preserves the underlying Markdown. Hiding the directive during selection does not expand the included note into the clipboard.
+- When **Automatically update internal links** is enabled in Obsidian, renaming or moving a file or folder updates affected include paths while retaining GitLab syntax. Moving the including note also rebases its paths. With that preference disabled, directives remain unchanged and may need manual correction.
 - Run **Insert GitLab include** from the command palette or editor context menu, then search for a Markdown note. The plugin inserts the correct relative path as one undoable edit.
 - Run **Convert Markdown embeds to GitLab includes** to convert supported standalone `![[note]]` embeds in the current note. Conversion uses Obsidian link resolution and is undoable. Nothing is converted automatically when enabling the plugin.
 
@@ -42,7 +45,13 @@ GitLab renders the included file seamlessly, while Obsidian displays a recogniza
 - GitLab processes include directives before Markdown, including in fenced code blocks. This plugin intentionally leaves fenced code examples unchanged and only renders note includes; source-code includes are not supported.
 - GitLab does not recursively expand includes; directives within included notes remain literal. Remote URLs, paths outside the vault, and non-Markdown targets are not loaded. A self-include displays the note once without recursively expanding its includes.
 - Reading View detects directives in rendered paragraph text. Markdown formatting characters that alter the directive's rendered structure may prevent detection; use Live Preview or Source mode to inspect such a directive.
-- The display is a close approximation using the public Markdown renderer, not Obsidian's native embed implementation. Native embed-specific controls, resizing and editing within the embed are not provided. Header display and rendering are always enabled.
+- The plugin uses Obsidian's native embed factory when available, with a public Markdown renderer fallback if that internal API changes. The fallback preserves the native embed styles and open-note control, but some native interactions (such as heading folding) may be unavailable. The saved directive is never changed into an Obsidian link. Includes are not registered as native links in the vault's backlinks or graph.
+
+## Compatibility and privacy
+
+Requires Obsidian 1.15.0 or newer. Native embed behavior was audited on Obsidian 1.15.0 for Windows; other desktop platforms and mobile have not received the same UI audit. The shipped plugin uses no Node.js or Electron APIs.
+
+The plugin works locally, makes no network requests, and contains no telemetry. It only reads or edits files inside the vault. Saved notes change through explicit insert/conversion commands, edits made through native task controls, or automatic include-path updates following the link-update preference described above.
 
 ## Build and manually install
 
@@ -83,10 +92,12 @@ Restart or reload Obsidian, enable community plugins, and enable **GitLab Includ
 5. Insert an include using the command, and convert a standalone `![[note]]` using the conversion command. Undo both; check image and PDF embeds are unchanged.
 6. Inspect `README.md` outside Obsidian to verify the include remains `::include{file=...}`. Push the files to GitLab and check its rendered result.
 
-Automated checks: `npm test`, `npm run typecheck`, `npm run lint`, `npm run check:manifest`, and `npm run build`.
+Run `npm run validate` for unit tests, type checking, lint, manifest/version checks, build and a smoke test of the actual release bundle. The [audit report](docs/embed-parity.md) describes the in-app comparisons. The development-only [audit harness](scripts/audit-embeds.cjs) is never bundled into the plugin.
 
 ## Release and community submission
 
-Update the version in `manifest.json` and `package.json` together, update the lockfile with `npm install --package-lock-only`, and run the checks above. Commit those changes and push a matching semantic version tag, e.g. `v0.1.0`. The release workflow checks the tag and publishes `main.js`, `manifest.json`, and `styles.css` as release assets. Ordinary pushes do not publish releases.
+Run `npm run prepare:release` to validate the source and prepare `dist/gitlab-includes/` with the three installable files, plus release notes and SHA-256 checksums in `dist/`. See the [publishing handoff](docs/publishing.md) for the final steps.
+
+For a later version, update `manifest.json`, `package.json`, `package-lock.json`, `versions.json` and the release notes together. The GitHub release tag must match the manifest version exactly, such as `0.1.0`, without a `v` prefix. The release workflow validates the tag and publishes the prepared assets. Ordinary branch pushes do not publish releases.
 
 Before submitting, review the current [manifest reference](https://docs.obsidian.md/Reference/Manifest), [submission requirements](https://docs.obsidian.md/community-directory/submission-requirements-for-plugins), and [developer policies](https://docs.obsidian.md/community-directory/developer-policies). Publish a release, then follow the community directory submission process to propose the repository. This project uses the MIT license.

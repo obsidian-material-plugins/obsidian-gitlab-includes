@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - "*.*.*"
 
 permissions:
   contents: write
@@ -21,15 +21,14 @@ jobs:
       - name: Verify release tag
         env:
           TAG: ${{ github.ref_name }}
-        run: node -e 'const v = require("./manifest.json").version; if (process.env.TAG !== `v${v}`) throw new Error("Tag must match manifest version");'
-      - run: npm test
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run build
-      - run: test -s main.js && test -s manifest.json && test -s styles.css
+        run: node -e 'const v = require("./manifest.json").version; if (process.env.TAG !== v) throw new Error("Tag must match manifest version exactly, without a v prefix");'
+      - run: npm run prepare:release
       - uses: softprops/action-gh-release@v2.3.3
         with:
           files: |
-            main.js
-            manifest.json
-            styles.css
+            dist/gitlab-includes/main.js
+            dist/gitlab-includes/manifest.json
+            dist/gitlab-includes/styles.css
+            dist/SHA256SUMS
+          body_path: dist/RELEASE_NOTES.md
+          fail_on_unmatched_files: true

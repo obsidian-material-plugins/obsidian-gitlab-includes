@@ -1,18 +1,11 @@
-.gitlab-include {
+.gitlab-include:not(.internal-embed) {
   display: block;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-m);
-  background: var(--background-secondary);
-  padding: var(--size-4-3);
-  margin: var(--size-4-3) 0;
   white-space: normal;
 }
 
-.gitlab-include-header {
-  display: block;
-  color: var(--text-muted);
-  font-size: var(--font-small);
-  margin-bottom: var(--size-4-2);
+/* The synthetic Markdown contains one paragraph around the native embed. */
+.gitlab-include-stage > p {
+  margin: 0;
 }
 
 .gitlab-include-error {

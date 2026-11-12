@@ -10,7 +10,10 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src tests",
     "test": "vitest run",
-    "check:manifest": "node check-manifest.mjs"
+    "check:manifest": "node check-manifest.mjs",
+    "check:artifacts": "node scripts/check-artifacts.mjs",
+    "validate": "npm test && npm run typecheck && npm run lint && npm run check:manifest && npm run build && npm run check:artifacts",
+    "prepare:release": "npm run validate && node scripts/prepare-release.mjs"
   },
   "devDependencies": {
     "@codemirror/state": "^6.5.0",

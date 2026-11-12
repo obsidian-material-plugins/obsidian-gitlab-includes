@@ -42,7 +42,7 @@ describe("reading view postprocessor", () => {
     processor(root, ctx as unknown as MarkdownPostProcessorContext);
     await new Promise(resolve => setTimeout(resolve, 0));
     expect(root.querySelectorAll(".gitlab-include")).toHaveLength(2);
-    expect(Array.from(root.querySelectorAll("h1")).map(el => el.textContent)).toEqual(["one.md", "two.md"]);
+    expect(Array.from(root.querySelectorAll(".gitlab-include-stage")).map(el => el.textContent)).toEqual(["![](one.md)", "![](two.md)"]);
     expect(paragraph.textContent).toContain("before");
     expect(paragraph.textContent).toContain("after");
     expect(pre.textContent).toBe("::include{file=one.md}");
