@@ -5,10 +5,10 @@
 - Support GitLab's standalone `::include{file=...}` syntax without converting saved notes to native embed syntax.
 - Make rendered includes match native Obsidian embeds in appearance, CSS inheritance and interactions. Preserve click-to-edit, drag selection, copying, folding, task editing, scrolling and navigation behavior already audited.
 - Keep file/folder rename and move support, including source-note rebasing, controlled by Obsidian's automatic-link preference.
-- Current priority: integrate includes with Obsidian's built-in global/local graphs and backlinks. The earlier decision to defer this feature was superseded on 2026-11-12.
+- Native graph/backlink integration is implemented and audited. Preserve it alongside the rendering, rename and shorthand behavior.
 - Graph/backlink integration was merged through PR #3. The user then requested a configurable insertion shorthand, default `::`, with an inline picker like native `[[` completion, listing only Markdown files. Insert GitLab directives in one undoable edit and persist the setting. Merge the completed work into `main`; release/tag publication remains separate.
-- The user published `0.1.0` on 2026-11-12. Its tag and all required assets were verified. Preserve that published release; directory-warning fixes are prepared as `0.1.1` on a separate branch so the public default branch keeps a matching release.
-- Push the audited rendering/rename implementation to `main` as a checkpoint before starting graph/backlink changes. A branch push is authorized; creating a release tag or publishing a release is not requested.
+- The user published `0.1.0` on 2026-11-12. Its tag and all required assets were verified. Preserve that published release.
+- For the current task, the user explicitly authorized merging all prepared fixes directly into `main` and publishing `0.1.1`. They confirmed that refreshing the community portal resolved the earlier missing-release notice. Complete release verification and remove the merged fix branch without asking again.
 
 ## Working practices
 
@@ -28,4 +28,4 @@
 - `npm run prepare:release`: validation plus the installable assets and checksums under ignored `dist/`.
 - `scripts/audit-embeds.cjs`: development-only in-app audit; never bundle it or local diagnostics into `main.js`.
 - The checkpoint was verified with 35 unit tests and 73 in-app rendering/rename checks on Obsidian 1.15.0 for Windows. Preserve that evidence in `docs/validation/0.1.0.json`; add new evidence for link integration.
-- GitHub release tags must exactly match `manifest.json` (`0.1.0`, without a `v` prefix). A tag push publishes via the release workflow. Do not create/push one without a publishing request.
+- GitHub release tags must exactly match `manifest.json` (`0.1.1` for this release, without a `v` prefix). A tag push publishes via the release workflow. Publishing this version is authorized by the current request.

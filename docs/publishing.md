@@ -1,6 +1,6 @@
 # Publishing handoff: 0.1.1
 
-Version 0.1.0 is already published with the required assets. This branch prepares 0.1.1 for the directory's source warnings. Merge and publication of this patch are separate final actions; the existing release remains unchanged.
+Version 0.1.0 is already published with the required assets. The 0.1.1 directory-warning fixes are merged into main, and the user has authorized publishing this patch. The existing 0.1.0 release remains unchanged.
 
 ## Prepared scope
 
@@ -33,7 +33,7 @@ This runs the full automated validation, smoke-tests the built CommonJS plugin a
 
 ## Patch-release walkthrough
 
-The user published 0.1.0 on 2026-11-12. Its manifest, tag, required assets and successful release workflow were verified. The subsequent `fix/directory-review` branch contains the warning fixes for 0.1.1. Until those fixes are merged and released, main continues to declare the existing 0.1.0 release.
+The user published 0.1.0 on 2026-11-12. Its manifest, tag, required assets and successful release workflow were verified. PR #4 merged the warning fixes for 0.1.1, including cross-window DOM handling and typed metadata wrappers. Publishing the 0.1.1 tag runs the automated release workflow below.
 
 1. After the fixes are merged to `main` and CI passes, publish the prepared version by creating and pushing its tag. These commands are the public release action:
 
@@ -50,7 +50,7 @@ The user published 0.1.0 on 2026-11-12. Its manifest, tag, required assets and s
 
 This sequence follows the current official [submission guide](https://docs.obsidian.md/Plugins/Releasing/Submit%20your%20plugin), [account and repository setup](https://docs.obsidian.md/community-directory/set-up-and-claim), and [review/listing guidance](https://docs.obsidian.md/community-directory/manage-entry), checked on 2026-11-12.
 
-The remote repository has published 0.1.0 and its default branch is `main`. No new tag or GitHub release was created as part of preparing 0.1.1. If the portal still reports no matching release for 0.1.0, use **… → Check for new releases**, followed by **… → Request review**. The listed source warnings do not block submission according to Obsidian's review guidance.
+The default branch is `main`. If the portal has not detected a published release yet, use **… → Check for new releases**, followed by **… → Request review**. The user confirmed that refreshing resolved the earlier missing-release message for 0.1.0. The listed source warnings do not block submission according to Obsidian's review guidance.
 
 ## Development-only in-app audit
 
