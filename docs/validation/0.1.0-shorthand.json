@@ -1,0 +1,112 @@
+{
+  "appVersion": "1.15.0",
+  "checks": [
+    {
+      "name": "default shorthand is two colons",
+      "pass": true
+    },
+    {
+      "name": "native settings tab exposes a validated text control",
+      "pass": true
+    },
+    {
+      "name": "native [[ picker is still available",
+      "pass": true
+    },
+    {
+      "name": ":: opens the registered inline include popup",
+      "pass": true
+    },
+    {
+      "name": "only Markdown files appear, excluding a matching PNG",
+      "pass": true,
+      "details": [
+        "_gitlab-shorthand-audit-1794493717826/Shorthand target Ä.md"
+      ]
+    },
+    {
+      "name": "rows use identical native [[ markup and classes",
+      "pass": true
+    },
+    {
+      "name": "all row and title CSS properties match native [[ at equal popup width",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Tab inserts a GitLab include with a literal relative path",
+      "pass": true
+    },
+    {
+      "name": "one undo restores the shorthand and query",
+      "pass": true
+    },
+    {
+      "name": "Enter accepts the native-style suggestion",
+      "pass": true
+    },
+    {
+      "name": "Escape dismisses without changing Markdown",
+      "pass": true
+    },
+    {
+      "name": "clicking a suggestion inserts a GitLab include",
+      "pass": true
+    },
+    {
+      "name": "custom shorthand is persisted to plugin settings",
+      "pass": true
+    },
+    {
+      "name": "custom shorthand opens the same picker",
+      "pass": true
+    },
+    {
+      "name": "custom shorthand still writes GitLab syntax",
+      "pass": true
+    },
+    {
+      "name": "custom shorthand survives a plugin reload",
+      "pass": true
+    },
+    {
+      "name": "reload registers exactly one include suggester",
+      "pass": true
+    },
+    {
+      "name": "empty shorthand disables completion",
+      "pass": true
+    },
+    {
+      "name": "no popup in code/frontmatter: ```md",
+      "pass": true
+    },
+    {
+      "name": "no popup in code/frontmatter: ---",
+      "pass": true
+    },
+    {
+      "name": "no popup in code/frontmatter: `example ::Shorthand",
+      "pass": true
+    },
+    {
+      "name": "inline shorthand becomes a standalone directive",
+      "pass": true
+    },
+    {
+      "name": "inserted directive renders through the existing native embed",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "phase": "complete",
+  "summary": {
+    "passed": 23,
+    "failed": 0
+  },
+  "fixturePaths": [
+    "_gitlab-shorthand-audit-1794493717826/source.md",
+    "_gitlab-shorthand-audit-1794493717826/Shorthand target Ä.png",
+    "_gitlab-shorthand-audit-1794493717826/Shorthand target Ä.md"
+  ]
+}

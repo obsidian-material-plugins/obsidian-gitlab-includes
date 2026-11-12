@@ -8,6 +8,7 @@ Use GitLab Markdown include directives as native note embeds in Obsidian 1.15.0 
 - Keep references valid when files or folders are renamed or moved, when Obsidian's automatic link updates are enabled.
 - Find includes in native backlinks, global/local graphs and outgoing links through in-memory reference translation. Backlinks retain original directive positions; saved notes remain GitLab Markdown.
 - Insert includes from the command palette or editor menu, and explicitly convert supported native embeds.
+- Type the configurable shorthand (default `::`) for a native-style inline picker of Markdown notes. Enter, Tab or clicking inserts GitLab syntax; images are excluded.
 - Keep GitLab include syntax in saved Markdown. The plugin works locally, without network requests or telemetry.
 
 Native rendering and indexing are verified on Obsidian 1.15.0 for Windows. Heading/block include syntax, remote includes and recursively expanded includes are outside this release's scope. Rendering and indexing use guarded internal APIs; a public-renderer fallback has fewer native interactions, and unavailable metadata hooks disable indexing with a notice. Other plugins reading stored parse metadata directly may not see includes.

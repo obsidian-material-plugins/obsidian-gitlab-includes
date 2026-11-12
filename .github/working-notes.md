@@ -64,3 +64,15 @@ Development notes: use fresh Node modules for repeated audits, pin backlink/loca
 Rendering regression completed: all 73 existing checks pass with indexing active, zero errors. Recorded in `docs/validation/0.1.0-with-indexing.json`. Combined in-app coverage is 97 passing checks.
 
 Handoff cleanup verified: temporary fixture folders are gone, the development bridge is stopped, and the plugin has been reloaded from the clean build. Installed `main.js`, `manifest.json` and `styles.css` are byte-identical to the validated release assets. The release ZIP contains exactly those three files with matching hashes. No tag or release was published.
+
+## 2026-11-12: merged indexing and configurable shorthand
+
+The user explicitly requested merging the integration into `main` and adding a setting for a shorthand that opens the same style of search as native `[[`, excluding images and other non-Markdown files. Default shorthand: `::`. PR #3 was merged as `e50e990b9e7dfefcfc4f3ba4dbcfd9409473fbc3` after verifying its head and successful checks.
+
+The new picker uses public `EditorSuggest` and the public fuzzy-search helper. It reuses the installed native link suggester's row renderer through a guarded adapter, with a public DOM/renderMatches fallback. It changes no global CSS. Native row markup/classes are identical; all computed row/title styles match at the same available width. The popup's natural width follows its footer content; this footer describes include insertion rather than unsupported heading/block/alias operations.
+
+Picking a note inserts a standalone `::include{file=...}` with a literal relative path in one `input.autocomplete` transaction. Default/custom triggers, Markdown-only filtering, native Enter/Tab/Escape/mouse handling, undo, persistence across reload, code/frontmatter exclusions and rendering were tested in the running app. Settings use Obsidian's declarative PluginSettingTab API, default to `::`, and accept an empty value to disable completion. Existing complete directives do not retrigger while their source is being edited. A configured native trigger such as `[[` takes priority only when this suggester's own context matches; removal restores the other suggesters' relative order.
+
+Validation: 59 unit tests plus type/lint/build/manifest/artifact checks, and 23 passing shorthand checks in Obsidian 1.15.0 for Windows. The live test used actual Windows Tab/Enter/Escape input. Results are stored in `docs/validation/0.1.0-shorthand.json`. Temporary fixture panes are saved before closing to avoid delayed editor saves recreating deleted test notes. User notes/configuration outside this plugin's settings are preserved.
+
+Final UI verification observed the Include shorthand field under Settings → GitLab Includes with value `::`. The clean plugin is installed and reloaded, exactly one include suggester is registered, and all three installed assets match the validated build byte for byte. Development hooks and owned fixture files/folders are removed. The user's README hash remains unchanged from the start of this feature work.

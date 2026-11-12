@@ -6,6 +6,9 @@ import { conversions } from "./conversion";
 import { isRepresentablePath, relativePath } from "./path-resolver";
 import { IncludeReferenceUpdates } from "./reference-updates";
 import { IncludeLinkIndex } from "./native-link-index";
+import { DEFAULT_SETTINGS, IncludeSettings, IncludeSettingsTab, readSettings } from "./settings";
+import { IncludeSuggest } from "./include-suggest";
+import { prioritizeIncludeSuggest } from "./native-suggestions";
 
 class FilePicker extends FuzzySuggestModal<TFile> {
   constructor(app: App, private choose: (file: TFile) => void) { super(app); }
@@ -15,7 +18,15 @@ class FilePicker extends FuzzySuggestModal<TFile> {
 }
 
 export default class GitLabIncludes extends Plugin {
-  onload(): void {
+  settings: IncludeSettings = { ...DEFAULT_SETTINGS };
+  private suggest: IncludeSuggest | null = null;
+
+  async onload(): Promise<void> {
+    this.settings = readSettings(await this.loadData());
+    this.addSettingTab(new IncludeSettingsTab(this.app, this));
+    this.suggest = new IncludeSuggest(this.app, () => this.settings.shorthand);
+    this.registerEditorSuggest(this.suggest);
+    prioritizeIncludeSuggest(this.app, this.suggest);
     this.addChild(new IncludeReferenceUpdates(this.app));
     this.addChild(new IncludeLinkIndex(this.app));
     this.registerMarkdownPostProcessor((el, ctx) => this.renderReading(el, ctx));
@@ -43,6 +54,17 @@ export default class GitLabIncludes extends Plugin {
         if (info.file) this.insert(editor, info.file);
       }));
     }));
+  }
+
+  async setShorthand(value: string): Promise<void> {
+    this.settings.shorthand = value;
+    this.suggest?.close();
+    await this.saveData(this.settings);
+  }
+
+  async onExternalSettingsChange(): Promise<void> {
+    this.settings = readSettings(await this.loadData());
+    this.suggest?.close();
   }
 
   private insert(editor: Editor, source: TFile): void {

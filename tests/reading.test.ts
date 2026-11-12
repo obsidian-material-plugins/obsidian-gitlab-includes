@@ -35,7 +35,7 @@ describe("reading view postprocessor", () => {
       workspace: { on: () => () => {}, openLinkText: vi.fn() }
     };
     const plugin = new GitLabIncludes(app as unknown as App, {} as never);
-    plugin.onload();
+    await plugin.onload();
     const children: { load: () => void; unload: () => void }[] = [];
     const ctx = { sourcePath: "docs/index.md", addChild: (child: typeof children[number]) => { children.push(child); child.load(); } };
     const processor = (plugin as unknown as { processor: (el: HTMLElement, ctx: MarkdownPostProcessorContext) => void }).processor;
