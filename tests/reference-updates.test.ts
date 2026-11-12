@@ -33,6 +33,25 @@ describe("include reference updates", () => {
 });
 
 describe("rename event lifecycle", () => {
+  it("waits for native offset-based link rewrites before changing include lengths", async () => {
+    const source = new TFile("source.md"), target = new TFile("renamed child.md");
+    let text = "::include{file=child.md}\n::include{file=child.md}\n![child](child.md)";
+    let complete!: () => void, rename!: (file: TFile, before: string) => void;
+    const native = new Promise<void>(resolve => { complete = resolve; });
+    const process = vi.fn(async (_file: TFile, change: (text: string) => string) => { text = change(text); return text; });
+    const app = { fileManager: { updateQueue: { promise: native } }, vault: {
+      getConfig: () => true, on: (_name: string, callback: typeof rename) => { rename = callback; return () => {}; },
+      getMarkdownFiles: () => [source, target], getAbstractFileByPath: (path: string) => [source, target].find(file => file.path === path),
+      cachedRead: async (file: TFile) => file === source ? text : "", process
+    } };
+    const manager = new IncludeReferenceUpdates(app as unknown as App); manager.load();
+    rename(target, "child.md"); await new Promise(resolve => setTimeout(resolve, 0));
+    expect(process).not.toHaveBeenCalled();
+    text = text.replace("![child](child.md)", "![child](renamed%20child.md)"); complete();
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(text).toBe("::include{file=renamed child.md}\n::include{file=renamed child.md}\n![child](renamed%20child.md)");
+    manager.unload();
+  });
   function fixture(enabled: boolean) {
     const source = new TFile("docs/index.md");
     const target = new TFile("docs/new.md");

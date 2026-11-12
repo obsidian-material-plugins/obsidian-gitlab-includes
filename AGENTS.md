@@ -13,6 +13,7 @@
 - Record relevant user requirements, investigation evidence, compatibility assumptions and decisions in `.github/working-notes.md`.
 - Use `AGENTS.md` as the standard agent instruction filename (the user's "afents.md" request refers to this file).
 - Preserve GitLab syntax and exact relative-file resolution. Never inject synthetic links into saved notes to obtain graph/backlink support.
+- The user explicitly approved translating includes into native references in memory and forwarding them to Obsidian's resolver. Saved Markdown must remain usable by GitLab. Keep this invariant when choosing an indexing approach.
 - Isolate internal Obsidian API adapters, feature-detect them, and restore any patched functions/cache state on unload. Research notes must distinguish verified behavior from hypotheses.
 - Test new link integration alongside ordinary native links, duplicates, missing targets, literal filenames, edits, creates, deletions, source/target/folder renames, reloads and unloads. Check source text remains intact.
 - Do not vendor extracted Obsidian implementation code. Reuse runtime APIs/components; keep local inspection artifacts outside this repository.

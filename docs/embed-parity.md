@@ -4,6 +4,8 @@ Audited on 2026-11-12 using the installed Obsidian 1.15.0 desktop app and its de
 
 Result: **73 integration checks passed, 0 failed** (66 rendering checks and 7 rename/preference checks). The release candidate also passes **35 unit tests**, TypeScript, ESLint, manifest validation, build, and whitespace checks.
 
+After adding native link indexing, the same **73 checks passed again**, with **24 additional indexing checks** and **48 unit tests** passing. See the [rendering regression results](validation/0.1.0-with-indexing.json) and [indexing audit](link-indexing.md). The original checkpoint evidence below is retained for comparison.
+
 | Area | Evidence |
 | --- | --- |
 | Rendering implementation | Both embeds instantiate the very same native component constructor from Obsidian's embed registry. |
@@ -36,7 +38,7 @@ The release candidate adds atomic include-path updates for file/folder renames a
 
 ## Limits of the conclusion
 
-This is a comparison of the supported full-note embed behavior on the installed app version, not a proof that every possible Obsidian feature or future release is identical. Includes deliberately retain GitLab syntax and relative-path semantics. They are not indexed as native backlinks/graph links. With automatic internal-link updates enabled, the plugin now rewrites include paths after file/folder renames and moves, while retaining GitLab syntax. Native heading/block-reference syntax and recursive GitLab includes are outside the supported directive syntax.
+This is a comparison of the supported full-note embed behavior on the installed app version, not a proof that every possible Obsidian feature or future release is identical. Includes deliberately retain GitLab syntax and relative-path semantics. [In-memory indexing](link-indexing.md) integrates them with native backlinks and graphs. With automatic internal-link updates enabled, the plugin rewrites include paths after file/folder renames and moves, while retaining GitLab syntax. Native heading/block-reference syntax and recursive GitLab includes are outside the supported directive syntax.
 
 The full native path uses an internal factory. If that API becomes unavailable, the public renderer fallback has fewer native interactions and cannot offer the same structural guarantee. CSS can also deliberately distinguish `.gitlab-include` from a native embed, or depend on an explicit native alias that GitLab syntax cannot express.
 

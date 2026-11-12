@@ -5,6 +5,7 @@ import { livePreview } from "./live-preview";
 import { conversions } from "./conversion";
 import { isRepresentablePath, relativePath } from "./path-resolver";
 import { IncludeReferenceUpdates } from "./reference-updates";
+import { IncludeLinkIndex } from "./native-link-index";
 
 class FilePicker extends FuzzySuggestModal<TFile> {
   constructor(app: App, private choose: (file: TFile) => void) { super(app); }
@@ -16,6 +17,7 @@ class FilePicker extends FuzzySuggestModal<TFile> {
 export default class GitLabIncludes extends Plugin {
   onload(): void {
     this.addChild(new IncludeReferenceUpdates(this.app));
+    this.addChild(new IncludeLinkIndex(this.app));
     this.registerMarkdownPostProcessor((el, ctx) => this.renderReading(el, ctx));
     this.registerEditorExtension(livePreview(this.app));
     this.addCommand({

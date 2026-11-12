@@ -9,7 +9,7 @@ const bundle = readFileSync("main.js", "utf8");
 for (const name of ["main.js", "manifest.json", "styles.css"]) {
   if (!readFileSync(name).length) throw new Error(`Empty release asset: ${name}`);
 }
-if (/audit-embeds|check-includes|C:\\Users\\|C:\/Users\/|clipboard\.readText|readFileSync|\beval\s*\(/.test(bundle)) {
+if (/audit-(?:embeds|links|bridge)|__includeAudit|check-includes|C:\\Users\\|C:\/Users\/|clipboard\.readText|readFileSync|\beval\s*\(/.test(bundle)) {
   throw new Error("Development-only code found in release bundle");
 }
 const module = { exports: {} };
