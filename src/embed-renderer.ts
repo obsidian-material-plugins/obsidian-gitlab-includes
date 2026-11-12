@@ -39,7 +39,7 @@ export class IncludeRender extends MarkdownRenderChild {
     this.containerEl.appendChild(stage);
     const component = this.addChild(new Component());
     try {
-      if (!(file instanceof TFile) || file.extension !== "md") {
+      if (!(file instanceof TFile) || file.path !== target || file.extension !== "md") {
         stage.createEl("span", { cls: "gitlab-include-error", text: `Include not found: ${this.path}` });
       } else {
         const header = stage.createEl("a", { cls: "gitlab-include-header", text: file.name, href: "#" });

@@ -1,0 +1,35 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run check:manifest
+      - name: Verify release tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: node -e 'const v = require("./manifest.json").version; if (process.env.TAG !== `v${v}`) throw new Error("Tag must match manifest version");'
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - run: test -s main.js && test -s manifest.json && test -s styles.css
+      - uses: softprops/action-gh-release@v2.3.3
+        with:
+          files: |
+            main.js
+            manifest.json
+            styles.css

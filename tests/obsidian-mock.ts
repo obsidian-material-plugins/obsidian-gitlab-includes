@@ -16,6 +16,16 @@ export class TFile {
   constructor(public path: string, public extension = "md") {}
   get name(): string { return this.path.split("/").pop() ?? ""; }
 }
+export const editorInfoField = StateField.define({ create: () => null, update: value => value });
+export const editorLivePreviewField = StateField.define({ create: () => true, update: value => value });
+export class FuzzySuggestModal {}
+export class Plugin extends Component {
+  constructor(public app: unknown) { super(); }
+  processor: ((el: HTMLElement, ctx: unknown) => void) | null = null;
+  registerMarkdownPostProcessor(processor: (el: HTMLElement, ctx: unknown) => void): void { this.processor = processor; }
+  registerEditorExtension(): void {}
+  addCommand(): void {}
+}
 export const MarkdownRenderer = {
   async render(_app: unknown, markdown: string, el: HTMLElement): Promise<void> {
     for (const line of markdown.split("\n")) {
@@ -25,3 +35,4 @@ export const MarkdownRenderer = {
     }
   }
 };
+import { StateField } from "@codemirror/state";
