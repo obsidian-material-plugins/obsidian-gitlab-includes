@@ -1,18 +1,9 @@
 // @vitest-environment jsdom
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { IncludeRender } from "../src/embed-renderer";
 import { App } from "obsidian";
 import { Component, MarkdownRenderer, TFile } from "./obsidian-mock";
 
-beforeAll(() => {
-  HTMLElement.prototype.createEl = function(this: HTMLElement, tag: string, options: { cls?: string; text?: string }) {
-    const el = document.createElement(tag);
-    if (options.cls) el.className = options.cls;
-    if (options.text) el.textContent = options.text;
-    this.appendChild(el);
-    return el;
-  } as typeof HTMLElement.prototype.createEl;
-});
 afterEach(() => vi.restoreAllMocks());
 
 function fixture(initial: string | null, path = "docs/child.md") {

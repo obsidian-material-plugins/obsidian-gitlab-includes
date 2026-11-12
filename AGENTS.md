@@ -7,6 +7,7 @@
 - Keep file/folder rename and move support, including source-note rebasing, controlled by Obsidian's automatic-link preference.
 - Current priority: integrate includes with Obsidian's built-in global/local graphs and backlinks. The earlier decision to defer this feature was superseded on 2026-11-12.
 - Graph/backlink integration was merged through PR #3. The user then requested a configurable insertion shorthand, default `::`, with an inline picker like native `[[` completion, listing only Markdown files. Insert GitLab directives in one undoable edit and persist the setting. Merge the completed work into `main`; release/tag publication remains separate.
+- The user published `0.1.0` on 2026-11-12. Its tag and all required assets were verified. Preserve that published release; directory-warning fixes are prepared as `0.1.1` on a separate branch so the public default branch keeps a matching release.
 - Push the audited rendering/rename implementation to `main` as a checkpoint before starting graph/backlink changes. A branch push is authorized; creating a release tag or publishing a release is not requested.
 
 ## Working practices

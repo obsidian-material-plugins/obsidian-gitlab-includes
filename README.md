@@ -37,8 +37,8 @@ GitLab renders the included file seamlessly, while Obsidian displays its native 
 - Includes appear in Obsidian's native backlinks, global graph, local graph and outgoing links. The plugin translates references in memory and forwards them to Obsidian's resolver; saved notes retain GitLab syntax. Backlink matches show the original directive and navigate to its source line. Disabling the plugin removes its indexed references.
 - As with native embeds, copying a selection across an embed in Live Preview preserves the underlying Markdown. Hiding the directive during selection does not expand the included note into the clipboard.
 - When **Automatically update internal links** is enabled in Obsidian, renaming or moving a file or folder updates affected include paths while retaining GitLab syntax. Moving the including note also rebases its paths. With that preference disabled, directives remain unchanged and may need manual correction.
-- Run **Insert GitLab include** from the command palette or editor context menu, then search for a Markdown note. The plugin inserts the correct relative path as one undoable edit.
-- Run **Convert Markdown embeds to GitLab includes** to convert supported standalone `![[note]]` embeds in the current note. Conversion uses Obsidian link resolution and is undoable. Nothing is converted automatically when enabling the plugin.
+- Run **Insert include** from the command palette or editor context menu, then search for a Markdown note. The plugin inserts the correct relative path as one undoable edit.
+- Run **Convert Markdown embeds to includes** to convert supported standalone `![[note]]` embeds in the current note. Conversion uses Obsidian link resolution and is undoable. Nothing is converted automatically when enabling the plugin.
 
 ## Limitations
 

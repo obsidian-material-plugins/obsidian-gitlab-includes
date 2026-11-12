@@ -13,8 +13,7 @@ class IncludeWidget extends WidgetType {
   constructor(private app: App, private source: string, private path: string) { super(); }
   eq(other: IncludeWidget): boolean { return this.source === other.source && this.path === other.path; }
   toDOM(view: EditorView): HTMLElement {
-    const el = document.createElement("div");
-    el.className = "gitlab-include";
+    const el = view.dom.ownerDocument.createDocumentFragment().createDiv({ cls: "gitlab-include" });
     const child = new IncludeRender(el, this.app, this.source, this.path);
     mounts.set(el, child);
     child.load();

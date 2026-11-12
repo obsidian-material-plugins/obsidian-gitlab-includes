@@ -88,10 +88,8 @@ export class IncludeRender extends MarkdownRenderChild {
   }
 
   private async renderFallback(generation: number, file: TFile | null): Promise<void> {
-    const stage = document.createElement("div");
-    stage.className = "gitlab-include-stage";
+    const stage = this.containerEl.createDiv({ cls: "gitlab-include-stage" });
     stage.hidden = true;
-    this.containerEl.appendChild(stage);
     const component = this.addChild(new Component());
     try {
       if (!file) {

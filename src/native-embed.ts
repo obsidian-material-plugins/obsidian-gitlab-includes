@@ -57,10 +57,7 @@ export async function renderFallbackEmbed(app: App, file: TFile, container: HTML
   await MarkdownRenderer.render(app, `![](${link})`, container, source, component);
   const el = container.querySelector<HTMLElement>(".markdown-embed");
   if (el && !el.querySelector(".markdown-embed-link")) {
-    const open = document.createElement("a");
-    open.className = "markdown-embed-link";
-    open.setAttribute("aria-label", "Open link");
-    open.setAttribute("href", file.path);
+    const open = el.createEl("a", { cls: "markdown-embed-link", attr: { "aria-label": "Open link", href: file.path } });
     setIcon(open, "lucide-maximize-2");
     const onClick = (event: MouseEvent) => {
       if (event.button !== 0 && event.button !== 1) return;
@@ -69,6 +66,5 @@ export async function renderFallbackEmbed(app: App, file: TFile, container: HTML
     };
     open.addEventListener("click", onClick);
     open.addEventListener("auxclick", onClick);
-    el.append(open);
   }
 }

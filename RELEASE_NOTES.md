@@ -1,4 +1,13 @@
-# GitLab Includes 0.1.0
+# GitLab Includes 0.1.1
+
+Fixes the source warnings reported by the Obsidian directory preview:
+
+- Create elements through Obsidian helpers in the embed's own document.
+- Recognize line breaks in Reading View across popout windows.
+- Shorten command labels while preserving existing command IDs and hotkeys.
+- Keep metadata wrapper returns typed and use the browser timer API.
+
+Validated with 60 unit tests, including a cross-window regression, TypeScript, ESLint with typed unsafe-return checks, manifest validation, build and compiled-artifact checks. Published 0.1.0 assets remain unchanged.
 
 Use GitLab Markdown include directives as native note embeds in Obsidian 1.15.0 or newer.
 

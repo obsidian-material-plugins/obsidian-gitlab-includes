@@ -79,7 +79,7 @@ export class IncludeReferenceUpdates extends Component {
     const deadline = Date.now() + 10000;
     while (!this.dead && sources.some(source => source.before !== source.after && source.file.path === source.before)) {
       if (Date.now() >= deadline) throw new Error("Timed out waiting for a folder move to finish");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await new Promise<void>(resolve => window.setTimeout(resolve, 10));
     }
     let next = 0, failures = 0;
     await Promise.all(Array.from({ length: Math.min(8, sources.length) }, async () => {
