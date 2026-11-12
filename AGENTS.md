@@ -7,8 +7,8 @@
 - Keep file/folder rename and move support, including source-note rebasing, controlled by Obsidian's automatic-link preference.
 - Native graph/backlink integration is implemented and audited. Preserve it alongside the rendering, rename and shorthand behavior.
 - Graph/backlink integration was merged through PR #3. The user then requested a configurable insertion shorthand, default `::`, with an inline picker like native `[[` completion, listing only Markdown files. Insert GitLab directives in one undoable edit and persist the setting. Merge the completed work into `main`; release/tag publication remains separate.
-- The user published `0.1.0` on 2026-11-12. Its tag and all required assets were verified. Preserve that published release.
-- For the current task, the user explicitly authorized merging all prepared fixes directly into `main` and publishing `0.1.1`. They confirmed that refreshing the community portal resolved the earlier missing-release notice. Complete release verification and remove the merged fix branch without asking again.
+- Versions `0.1.0` and `0.1.1` are published and verified. Preserve their tags and assets.
+- The user's request to merge all prepared fixes directly into `main` and publish `0.1.1` is complete. The fix branch was removed, release and tag CI passed, and downloaded assets passed checksum and compiled-bundle verification. They confirmed that refreshing the community portal resolved the earlier missing-release notice.
 
 ## Working practices
 
@@ -28,4 +28,4 @@
 - `npm run prepare:release`: validation plus the installable assets and checksums under ignored `dist/`.
 - `scripts/audit-embeds.cjs`: development-only in-app audit; never bundle it or local diagnostics into `main.js`.
 - The checkpoint was verified with 35 unit tests and 73 in-app rendering/rename checks on Obsidian 1.15.0 for Windows. Preserve that evidence in `docs/validation/0.1.0.json`; add new evidence for link integration.
-- GitHub release tags must exactly match `manifest.json` (`0.1.1` for this release, without a `v` prefix). A tag push publishes via the release workflow. Publishing this version is authorized by the current request.
+- GitHub release tags must exactly match `manifest.json`, without a `v` prefix. A tag push publishes via the release workflow. Release `0.1.1` is already published; use an incremented version for subsequent releases.

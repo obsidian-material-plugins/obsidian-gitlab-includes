@@ -1,6 +1,6 @@
-# Publishing handoff: 0.1.1
+# Published release: 0.1.1
 
-Version 0.1.0 is already published with the required assets. The 0.1.1 directory-warning fixes are merged into main, and the user has authorized publishing this patch. The existing 0.1.0 release remains unchanged.
+[Version 0.1.1 is published](https://github.com/obsidian-material-plugins/obsidian-gitlab-includes/releases/tag/0.1.1), including the directory-warning fixes merged through PR #4. Release and tag CI passed. Downloaded assets match the attached checksums, and the shipped JavaScript passed the compiled-bundle smoke test. The 0.1.0 release remains unchanged. The steps below record this publication process; use an incremented version for future releases.
 
 ## Prepared scope
 
